@@ -10,12 +10,12 @@ const dataPath = path.resolve(__dirname, "../data/mockData.json");
 
 export const getEmployees = (req, res) => {
     try {
-        console.log("🔍 Reading file from path:", dataPath); // 👈 Log the actual path Node is trying to read
         const jsonData = fs.readFileSync(dataPath, "utf-8");
         const data = JSON.parse(jsonData);
-        res.json(data);
+        const employees = Array.isArray(data) ? data : data.employees ?? [];
+        res.json(employees);
     } catch (error) {
-        console.error(" Error reading data file:", error.message);
+        console.error("Error reading data file:", error.message);
         res.status(500).json({
             message: "Error reading data file",
             error: error.message,

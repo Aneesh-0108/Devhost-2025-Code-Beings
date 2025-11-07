@@ -1,9 +1,9 @@
 function BurnoutChart() {
   const chartData = [
-    { label: "Low", height: "180px", color: "bg-yellow-300" },
-    { label: "Medium", height: "120px", color: "bg-blue-300" },
-    { label: "High", height: "60px", color: "bg-green-300" },
-  ];
+    { label: 'Low', height: '180px', color: 'bg-yellow-300' },
+    { label: 'Medium', height: '120px', color: 'bg-blue-300' },
+    { label: 'High', height: '60px', color: 'bg-green-300' },
+  ]
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
@@ -22,7 +22,8 @@ function BurnoutChart() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default BurnoutChart;
+export default BurnoutChart
+

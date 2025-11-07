@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
 import EmployeeOverview from './components/EmployeeOverview'
+import MonitorCam from './pages/MonitorCam'
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
@@ -16,6 +17,8 @@ function App() {
     switch (activePage) {
       case 'employees':
         return <EmployeeOverview />
+      case 'live-monitor':
+        return <MonitorCam />
       case 'settings':
         return (
           <div className="p-6">

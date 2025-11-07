@@ -1,16 +1,16 @@
-function EmployeeTable({ employees }) {
+function EmployeeTable({ employees = [] }) {
   const getRiskBadgeClass = (risk) => {
     switch (risk) {
-      case "High":
-        return "bg-red-100 text-red-800";
-      case "Medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "Low":
-        return "bg-green-100 text-green-800";
+      case 'High':
+        return 'bg-red-100 text-red-800'
+      case 'Medium':
+        return 'bg-yellow-100 text-yellow-800'
+      case 'Low':
+        return 'bg-green-100 text-green-800'
       default:
-        return "bg-gray-100 text-gray-800";
+        return 'bg-gray-100 text-gray-800'
     }
-  };
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
@@ -53,7 +53,8 @@ function EmployeeTable({ employees }) {
         </table>
       </div>
     </div>
-  );
+  )
 }
 
-export default EmployeeTable;
+export default EmployeeTable
+

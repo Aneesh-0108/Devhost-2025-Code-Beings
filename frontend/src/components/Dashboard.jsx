@@ -1,56 +1,86 @@
-import { useEffect, useState } from 'react'
-import { fetchEmployees } from '../lib/api'
+import { useEffect, useMemo, useState } from 'react'
+import { fetchAiTelemetry, fetchEmployees } from '../lib/api'
 import MetricCard from './MetricCard'
 import BurnoutChart from './BurnoutChart'
 import EmployeeTable from './EmployeeTable'
 
+const toTitleCase = (value = '') => value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+
+const getRecommendation = (risk) => {
+  switch (risk) {
+    case 'High':
+      return 'Schedule immediate support and reduce workload.'
+    case 'Medium':
+      return 'Monitor workload and encourage mindfulness breaks.'
+    default:
+      return 'Keep momentum and continue current support.'
+  }
+}
+
 function Dashboard() {
   const [employees, setEmployees] = useState([])
+  const [aiInsights, setAiInsights] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
-    (async () => {
+    let cancelled = false
+
+    const loadDashboard = async () => {
       try {
-        const data = await fetchEmployees()
-        // Transform backend data to match dashboard format
-        const transformedData = data.map(emp => ({
-          name: emp.name,
-          risk: emp.status,
-          recommendation: getRecommendation(emp.status)
-        }))
-        setEmployees(transformedData)
-      } catch (e) {
-        setError(e.message || 'Something went wrong')
+        const [employeeData, telemetryData] = await Promise.all([
+          fetchEmployees(),
+          fetchAiTelemetry().catch(() => null),
+        ])
+
+        if (cancelled) return
+
+        setEmployees(employeeData)
+        setAiInsights(telemetryData)
+        setError('')
+      } catch (err) {
+        if (cancelled) return
+        console.error('Failed to load dashboard data', err)
+        setError(err.message || 'Unable to load dashboard data')
       } finally {
-        setLoading(false)
+        if (!cancelled) setLoading(false)
       }
-    })()
+    }
+
+    loadDashboard()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
-  const getRecommendation = (status) => {
-    switch (status.toLowerCase()) {
-      case 'high':
-        return 'Encourage a rest'
-      case 'normal':
-        return 'Monitor workload'
-      case 'low':
-        return 'Maintain current pace'
-      default:
-        return 'Monitor workload'
-    }
-  }
+  const tableEmployees = useMemo(() => {
+    return employees.map((employee) => {
+      const normalized = toTitleCase(employee.status ?? 'Unknown')
+      const risk = normalized === 'Normal' ? 'Medium' : normalized
+      return {
+        name: employee.name,
+        risk,
+        recommendation: getRecommendation(risk),
+      }
+    })
+  }, [employees])
 
-  if (loading) return <div className="p-6">Loading dashboard...</div>
-  if (error) return <div className="p-6 text-red-600">Error: {error}</div>
+  const totalEmployees = employees.length
+  const highRiskCount = tableEmployees.filter((emp) => emp.risk === 'High').length
+
+  if (loading) {
+    return <div className="p-6">Loading dashboard...</div>
+  }
 
   return (
     <div className="p-6 space-y-6">
-      {/* Metrics Cards */}
+      {error && <div className="text-sm text-red-600">{error}</div>}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
           title="Total Employees"
-          value="120"
+          value={String(totalEmployees || '—')}
           icon={
             <svg
               className="w-6 h-6 text-blue-600"
@@ -72,7 +102,7 @@ function Dashboard() {
 
         <MetricCard
           title="High Burnout Risk"
-          value="8 Employees"
+          value={`${highRiskCount} Employees`}
           icon={
             <svg
               className="w-6 h-6 text-red-600"
@@ -87,35 +117,11 @@ function Dashboard() {
         />
 
         <MetricCard
-          title="Average Mood"
-          value="7.6 / 10"
+          title="Live Burnout Risk"
+          value={aiInsights?.burnoutRisk ?? 'Unknown'}
           icon={
             <svg
-              className="w-6 h-6 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <circle cx="12" cy="12" r="10" strokeWidth="2" />
-              <circle cx="9" cy="10" r="1.5" fill="currentColor" />
-              <circle cx="15" cy="10" r="1.5" fill="currentColor" />
-              <path
-                d="M9 14c0 1.5 1.5 3 3 3s3-1.5 3-3"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          }
-          iconBgColor="bg-green-100"
-          iconColor="text-green-600"
-        />
-
-        <MetricCard
-          title="Avg Weekly Hours"
-          value="44 hrs"
-          icon={
-            <svg
-              className="w-6 h-6 text-blue-600"
+              className="w-6 h-6 text-yellow-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -124,20 +130,43 @@ function Dashboard() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
           }
-          iconBgColor="bg-blue-100"
-          iconColor="text-blue-600"
+          iconBgColor="bg-yellow-100"
+          iconColor="text-yellow-600"
+        />
+
+        <MetricCard
+          title="Last AI Update"
+          value={aiInsights?.lastUpdated ? new Date(aiInsights.lastUpdated).toLocaleTimeString() : '—'}
+          icon={
+            <svg
+              className="w-6 h-6 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          }
+          iconBgColor="bg-green-100"
+          iconColor="text-green-600"
         />
       </div>
 
       <BurnoutChart />
 
-      <EmployeeTable employees={employees} />
+      <EmployeeTable employees={tableEmployees} />
     </div>
   )
 }
 
 export default Dashboard
+

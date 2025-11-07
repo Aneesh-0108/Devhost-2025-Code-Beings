@@ -11,7 +11,8 @@ function MetricCard({ title, value, icon, iconBgColor, iconColor }) {
       <h3 className="text-sm font-medium text-gray-600 mb-1">{title}</h3>
       <p className="text-2xl font-semibold text-gray-800">{value}</p>
     </div>
-  );
+  )
 }
 
-export default MetricCard;
+export default MetricCard
+

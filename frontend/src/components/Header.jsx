@@ -12,7 +12,8 @@ function Header() {
         </svg>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header
+
