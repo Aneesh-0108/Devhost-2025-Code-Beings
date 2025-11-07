@@ -26,5 +26,12 @@
         "weeklyHours": 44,
         "todayHours": 7,
         "status": "Normal"
+    },
+    {
+        "id": 5,
+        "name": "Test User",
+        "weeklyHours": 60,
+        "todayHours": 9,
+        "status": "High"
     }
 ]

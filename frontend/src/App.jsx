@@ -8,14 +8,6 @@ import EmployeeOverview from './components/EmployeeOverview'
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
 
-  const dashboardEmployees = [
-    { name: 'Alice', risk: 'High', recommendation: 'Encourage a rest' },
-    { name: 'Bob', risk: 'Medium', recommendation: 'Monitor workload' },
-    { name: 'Charlie', risk: 'Low', recommendation: 'Maintain current pace' },
-    { name: 'Diana', risk: 'High', recommendation: 'Schedule time off' },
-    { name: 'Eve', risk: 'Medium', recommendation: 'Reduce overtime' },
-  ]
-
   const handleNavigate = (page) => {
     setActivePage(page)
   }
@@ -37,7 +29,7 @@ function App() {
         )
       case 'dashboard':
       default:
-        return <Dashboard employees={dashboardEmployees} />
+        return <Dashboard />
     }
   }
 
