@@ -1,0 +1,502 @@
+[
+  {
+    "doctorId": 1,
+    "name": "Brian Bennett",
+    "department": "Anesthesiology",
+    "weeklyHours": 59,
+    "patientLoad": 51,
+    "emotionScore": 0.27,
+    "shiftDuration": 11,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 2,
+    "name": "Angela Campbell",
+    "department": "Gastroenterology",
+    "weeklyHours": 53,
+    "patientLoad": 54,
+    "emotionScore": 0.2,
+    "shiftDuration": 6,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 3,
+    "name": "Heather Brown",
+    "department": "Neurology",
+    "weeklyHours": 36,
+    "patientLoad": 24,
+    "emotionScore": 0.94,
+    "shiftDuration": 6,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 4,
+    "name": "Raymond Richardson",
+    "department": "Family Medicine",
+    "weeklyHours": 50,
+    "patientLoad": 37,
+    "emotionScore": 0.25,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 5,
+    "name": "Frank Wilson",
+    "department": "Pediatrics",
+    "weeklyHours": 35,
+    "patientLoad": 44,
+    "emotionScore": 0.57,
+    "shiftDuration": 11,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 6,
+    "name": "Anna Young",
+    "department": "Hematology",
+    "weeklyHours": 54,
+    "patientLoad": 53,
+    "emotionScore": 0.71,
+    "shiftDuration": 6,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 7,
+    "name": "Brenda King",
+    "department": "Oncology",
+    "weeklyHours": 59,
+    "patientLoad": 32,
+    "emotionScore": 0.14,
+    "shiftDuration": 8,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 8,
+    "name": "Carolyn Cox",
+    "department": "Dermatology",
+    "weeklyHours": 56,
+    "patientLoad": 40,
+    "emotionScore": 0.28,
+    "shiftDuration": 11,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 9,
+    "name": "Nicole Wright",
+    "department": "Gynecology",
+    "weeklyHours": 47,
+    "patientLoad": 32,
+    "emotionScore": 0.74,
+    "shiftDuration": 10,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 10,
+    "name": "Debra Gray",
+    "department": "Surgery",
+    "weeklyHours": 66,
+    "patientLoad": 59,
+    "emotionScore": 0.13,
+    "shiftDuration": 12,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 11,
+    "name": "Mary Richardson",
+    "department": "Dermatology",
+    "weeklyHours": 67,
+    "patientLoad": 56,
+    "emotionScore": 0.32,
+    "shiftDuration": 12,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 12,
+    "name": "Donald Evans",
+    "department": "Ophthalmology",
+    "weeklyHours": 56,
+    "patientLoad": 31,
+    "emotionScore": 0.43,
+    "shiftDuration": 9,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 13,
+    "name": "Richard Morris",
+    "department": "Psychiatry",
+    "weeklyHours": 37,
+    "patientLoad": 31,
+    "emotionScore": 0.27,
+    "shiftDuration": 8,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 14,
+    "name": "Kathleen Rogers",
+    "department": "Orthopedics",
+    "weeklyHours": 54,
+    "patientLoad": 56,
+    "emotionScore": 0.9,
+    "shiftDuration": 8,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 15,
+    "name": "Samuel Patel",
+    "department": "Internal Medicine",
+    "weeklyHours": 57,
+    "patientLoad": 38,
+    "emotionScore": 0.34,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 16,
+    "name": "Betty Castillo",
+    "department": "Obstetrics",
+    "weeklyHours": 51,
+    "patientLoad": 15,
+    "emotionScore": 0.68,
+    "shiftDuration": 7,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 17,
+    "name": "Sharon Garcia",
+    "department": "Dermatology",
+    "weeklyHours": 40,
+    "patientLoad": 13,
+    "emotionScore": 0.5,
+    "shiftDuration": 8,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 18,
+    "name": "Amanda Reyes",
+    "department": "Cardiology",
+    "weeklyHours": 58,
+    "patientLoad": 52,
+    "emotionScore": 0.4,
+    "shiftDuration": 10,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 19,
+    "name": "John Turner",
+    "department": "Urology",
+    "weeklyHours": 62,
+    "patientLoad": 39,
+    "emotionScore": 0.68,
+    "shiftDuration": 9,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 20,
+    "name": "Pamela Diaz",
+    "department": "Psychiatry",
+    "weeklyHours": 38,
+    "patientLoad": 26,
+    "emotionScore": 0.85,
+    "shiftDuration": 10,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 21,
+    "name": "Betty Myers",
+    "department": "Surgery",
+    "weeklyHours": 46,
+    "patientLoad": 32,
+    "emotionScore": 0.7,
+    "shiftDuration": 8,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 22,
+    "name": "Joshua Nelson",
+    "department": "Nephrology",
+    "weeklyHours": 42,
+    "patientLoad": 21,
+    "emotionScore": 0.88,
+    "shiftDuration": 8,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 23,
+    "name": "Ronald Thompson",
+    "department": "Rheumatology",
+    "weeklyHours": 66,
+    "patientLoad": 34,
+    "emotionScore": 0.29,
+    "shiftDuration": 9,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 24,
+    "name": "Ronald Parker",
+    "department": "Emergency",
+    "weeklyHours": 67,
+    "patientLoad": 28,
+    "emotionScore": 0.54,
+    "shiftDuration": 7,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 25,
+    "name": "Jacob Cook",
+    "department": "Gynecology",
+    "weeklyHours": 53,
+    "patientLoad": 58,
+    "emotionScore": 0.83,
+    "shiftDuration": 11,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 26,
+    "name": "Susan Patel",
+    "department": "Dermatology",
+    "weeklyHours": 35,
+    "patientLoad": 34,
+    "emotionScore": 0.67,
+    "shiftDuration": 10,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 27,
+    "name": "Benjamin Nelson",
+    "department": "Dermatology",
+    "weeklyHours": 35,
+    "patientLoad": 48,
+    "emotionScore": 0.85,
+    "shiftDuration": 11,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 28,
+    "name": "Melissa Sanchez",
+    "department": "Anesthesiology",
+    "weeklyHours": 68,
+    "patientLoad": 17,
+    "emotionScore": 0.54,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 29,
+    "name": "Amanda Murphy",
+    "department": "Anesthesiology",
+    "weeklyHours": 35,
+    "patientLoad": 55,
+    "emotionScore": 0.75,
+    "shiftDuration": 6,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 30,
+    "name": "Linda Miller",
+    "department": "Pediatrics",
+    "weeklyHours": 47,
+    "patientLoad": 52,
+    "emotionScore": 0.51,
+    "shiftDuration": 9,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 31,
+    "name": "Scott Patel",
+    "department": "Pediatrics",
+    "weeklyHours": 58,
+    "patientLoad": 30,
+    "emotionScore": 0.38,
+    "shiftDuration": 11,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 32,
+    "name": "Charles Green",
+    "department": "Gynecology",
+    "weeklyHours": 65,
+    "patientLoad": 11,
+    "emotionScore": 0.89,
+    "shiftDuration": 7,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 33,
+    "name": "Steven Anderson",
+    "department": "Pulmonology",
+    "weeklyHours": 66,
+    "patientLoad": 15,
+    "emotionScore": 0.67,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 34,
+    "name": "Donald Ward",
+    "department": "Hematology",
+    "weeklyHours": 41,
+    "patientLoad": 15,
+    "emotionScore": 0.37,
+    "shiftDuration": 11,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 35,
+    "name": "Edward Young",
+    "department": "Family Medicine",
+    "weeklyHours": 65,
+    "patientLoad": 55,
+    "emotionScore": 0.55,
+    "shiftDuration": 11,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 36,
+    "name": "Christine Morris",
+    "department": "Gastroenterology",
+    "weeklyHours": 47,
+    "patientLoad": 53,
+    "emotionScore": 0.6,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 37,
+    "name": "Anna Turner",
+    "department": "Internal Medicine",
+    "weeklyHours": 36,
+    "patientLoad": 10,
+    "emotionScore": 0.16,
+    "shiftDuration": 10,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 38,
+    "name": "Kenneth Roberts",
+    "department": "Nephrology",
+    "weeklyHours": 69,
+    "patientLoad": 40,
+    "emotionScore": 0.76,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 39,
+    "name": "Ronald Brown",
+    "department": "Pediatrics",
+    "weeklyHours": 62,
+    "patientLoad": 40,
+    "emotionScore": 0.88,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 40,
+    "name": "Anna Miller",
+    "department": "Hematology",
+    "weeklyHours": 38,
+    "patientLoad": 24,
+    "emotionScore": 0.7,
+    "shiftDuration": 12,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 41,
+    "name": "Frank Torres",
+    "department": "Cardiology",
+    "weeklyHours": 38,
+    "patientLoad": 26,
+    "emotionScore": 0.13,
+    "shiftDuration": 7,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 42,
+    "name": "Carol James",
+    "department": "Neurology",
+    "weeklyHours": 63,
+    "patientLoad": 54,
+    "emotionScore": 0.84,
+    "shiftDuration": 7,
+    "burnoutRisk": "High"
+  },
+  {
+    "doctorId": 43,
+    "name": "Andrew Jones",
+    "department": "Radiology",
+    "weeklyHours": 57,
+    "patientLoad": 11,
+    "emotionScore": 0.77,
+    "shiftDuration": 11,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 44,
+    "name": "Matthew Price",
+    "department": "Surgery",
+    "weeklyHours": 43,
+    "patientLoad": 57,
+    "emotionScore": 0.19,
+    "shiftDuration": 8,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 45,
+    "name": "Samuel Bennett",
+    "department": "Radiology",
+    "weeklyHours": 54,
+    "patientLoad": 12,
+    "emotionScore": 0.88,
+    "shiftDuration": 6,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 46,
+    "name": "Andrew Kim",
+    "department": "Psychiatry",
+    "weeklyHours": 43,
+    "patientLoad": 27,
+    "emotionScore": 0.3,
+    "shiftDuration": 8,
+    "burnoutRisk": "Low"
+  },
+  {
+    "doctorId": 47,
+    "name": "Michael Sanchez",
+    "department": "Internal Medicine",
+    "weeklyHours": 46,
+    "patientLoad": 36,
+    "emotionScore": 0.45,
+    "shiftDuration": 10,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 48,
+    "name": "Edward Young",
+    "department": "Obstetrics",
+    "weeklyHours": 52,
+    "patientLoad": 52,
+    "emotionScore": 0.72,
+    "shiftDuration": 11,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 49,
+    "name": "Emily Green",
+    "department": "Cardiology",
+    "weeklyHours": 42,
+    "patientLoad": 57,
+    "emotionScore": 0.99,
+    "shiftDuration": 12,
+    "burnoutRisk": "Medium"
+  },
+  {
+    "doctorId": 50,
+    "name": "Emily Nguyen",
+    "department": "Otolaryngology",
+    "weeklyHours": 50,
+    "patientLoad": 14,
+    "emotionScore": 0.98,
+    "shiftDuration": 7,
+    "burnoutRisk": "Low"
+  }
+]

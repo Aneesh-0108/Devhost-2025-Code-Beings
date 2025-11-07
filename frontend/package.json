@@ -15,7 +15,8 @@
     "face-api.js": "^0.22.2",
     "react": "^19.1.1",
     "react-chartjs-2": "^5.3.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "recharts": "^3.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

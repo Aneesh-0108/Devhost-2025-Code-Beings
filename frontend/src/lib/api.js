@@ -64,3 +64,16 @@ export async function updateEmployee(data) {
     }
 }
 
+export async function fetchWorkloadBalance() {
+    try {
+        const response = await fetch(`${API_BASE}/ai/balanceWorkload`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch workload balance");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching workload balance:", error);
+        throw error;
+    }
+}
+

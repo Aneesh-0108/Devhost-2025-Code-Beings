@@ -3,6 +3,7 @@ import { fetchAiTelemetry, fetchEmployees } from '../lib/api'
 import MetricCard from './MetricCard'
 import BurnoutChart from './BurnoutChart'
 import EmployeeTable from './EmployeeTable'
+import WorkloadOverview from './WorkloadOverview'
 
 const toTitleCase = (value = '') => value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
 
@@ -162,6 +163,8 @@ function Dashboard() {
       </div>
 
       <BurnoutChart />
+
+      <WorkloadOverview />
 
       <EmployeeTable employees={tableEmployees} />
     </div>
