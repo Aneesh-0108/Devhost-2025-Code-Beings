@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Alice Johnson",
+        "weeklyHours": 55,
+        "todayHours": 7.5,
+        "status": "High"
+    },
+    {
+        "id": 2,
+        "name": "Bob Eriksen",
+        "weeklyHours": 38,
+        "todayHours": 6,
+        "status": "Low"
+    },
+    {
+        "id": 3,
+        "name": "Clara Nilsson",
+        "weeklyHours": 50,
+        "todayHours": 8,
+        "status": "Normal"
+    },
+    {
+        "id": 4,
+        "name": "David Hansen",
+        "weeklyHours": 44,
+        "todayHours": 7,
+        "status": "Normal"
+    }
+]
