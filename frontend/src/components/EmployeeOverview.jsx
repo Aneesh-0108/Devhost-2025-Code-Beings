@@ -1,23 +1,23 @@
 function EmployeeOverview() {
   const employees = [
-    { name: 'Alice Johnson', weeklyHrs: 55, status: 'high' },
-    { name: 'Bob Eriksen', weeklyHrs: 38, status: 'low' },
-    { name: 'Clara Nilsson', weeklyHrs: 50, status: 'normal' },
-    { name: 'David Hansen', weeklyHrs: 44, status: 'normal' },
-  ]
+    { name: "Alice Johnson", weeklyHrs: 55, todayHrs: 7.5, status: "high" },
+    { name: "Bob Eriksen", weeklyHrs: 38, todayHrs: 6.0, status: "low" },
+    { name: "Clara Nilsson", weeklyHrs: 50, todayHrs: 8.0, status: "normal" },
+    { name: "David Hansen", weeklyHrs: 44, todayHrs: 7.0, status: "normal" },
+  ];
 
   const getStatusBadgeClass = (status) => {
     switch (status.toLowerCase()) {
-      case 'high':
-        return 'bg-red-100 text-red-800'
-      case 'low':
-        return 'bg-green-100 text-green-800'
-      case 'normal':
-        return 'bg-green-100 text-green-800'
+      case "high":
+        return "bg-red-100 text-red-800";
+      case "low":
+        return "bg-green-100 text-green-800";
+      case "normal":
+        return "bg-green-100 text-green-800";
       default:
-        return 'bg-gray-100 text-gray-800'
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
 
   return (
     <div className="p-6">
@@ -34,6 +34,9 @@ function EmployeeOverview() {
                 </th>
                 <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
                   Weekly Hrs
+                </th>
+                <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
+                  Today's Hours
                 </th>
                 <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">
                   Status
@@ -62,6 +65,9 @@ function EmployeeOverview() {
                   <td className="px-6 py-4 text-center text-sm text-gray-800">
                     {employee.weeklyHrs}
                   </td>
+                  <td className="px-6 py-4 text-center text-sm text-gray-800">
+                    {employee.todayHrs} hrs
+                  </td>
                   <td className="px-6 py-4 text-center">
                     <span
                       className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full capitalize ${getStatusBadgeClass(
@@ -78,7 +84,7 @@ function EmployeeOverview() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default EmployeeOverview
+export default EmployeeOverview;
