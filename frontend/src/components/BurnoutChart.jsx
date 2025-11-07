@@ -1,29 +1,64 @@
-function BurnoutChart() {
-  const chartData = [
-    { label: 'Low', height: '180px', color: 'bg-yellow-300' },
-    { label: 'Medium', height: '120px', color: 'bg-blue-300' },
-    { label: 'High', height: '60px', color: 'bg-green-300' },
-  ]
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const BurnoutChart = () => {
+  const data = {
+    labels: ['Low', 'Medium', 'High'],
+    datasets: [
+      {
+        label: 'Employee Count',
+        data: [12, 19, 3],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+          'rgba(75, 192, 192, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Burnout Risk Distribution',
+      },
+    },
+  };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-      <h2 className="text-lg font-semibold text-gray-800 mb-6">
-        Burnout Distribution
-      </h2>
-      <div className="flex items-end justify-center gap-8 h-64">
-        {chartData.map((item, index) => (
-          <div key={index} className="flex flex-col items-center gap-2">
-            <div
-              className={`w-20 ${item.color} rounded-t-lg transition-all`}
-              style={{ height: item.height }}
-            ></div>
-            <span className="text-sm text-gray-600">{item.label}</span>
-          </div>
-        ))}
-      </div>
+    <div className="bg-white p-4 rounded-lg shadow">
+      <Bar data={data} options={options} />
     </div>
-  )
-}
+  );
+};
 
-export default BurnoutChart
+export default BurnoutChart;
 

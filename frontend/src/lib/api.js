@@ -1,34 +1,66 @@
-export async function fetchEmployees() {
-    const res = await fetch('/api/employees');
-    if (!res.ok) throw new Error('Failed to fetch employees');
-    return res.json();
-}
+const API_BASE = "http://localhost:5000/api";
 
-export async function fetchTodayTime() {
-    const res = await fetch('/api/time/today');
-    if (!res.ok) throw new Error('Failed to fetch time');
-    return res.json();
+export async function fetchEmployees() {
+    try {
+        const response = await fetch(`${API_BASE}/employees`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch employees");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching employees:", error);
+        throw error;
+    }
 }
 
 export async function fetchAiTelemetry() {
-    const res = await fetch('/api/ai/telemetry');
-    if (!res.ok) throw new Error('Failed to fetch AI telemetry');
-    return res.json();
-}
-
-export async function sendAiTelemetry(payload) {
-    const res = await fetch('/api/ai/telemetry', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-        const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Failed to send AI telemetry');
+    try {
+        const response = await fetch(`${API_BASE}/ai/telemetry`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch AI telemetry");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching AI telemetry:", error);
+        throw error;
     }
-
-    return res.json();
 }
+
+export async function sendAiTelemetry(data) {
+    try {
+        const response = await fetch(`${API_BASE}/ai/telemetry`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            throw new Error("Failed to send AI telemetry");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error sending AI telemetry:", error);
+        throw error;
+    }
+}
+
+export async function updateEmployee(data) {
+    try {
+        const response = await fetch(`${API_BASE}/employees/update`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+            throw new Error("Failed to update employee");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error updating employee:", error);
+        throw error;
+    }
+}
+

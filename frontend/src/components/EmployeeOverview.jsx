@@ -1,152 +1,160 @@
-import { useEffect, useMemo, useState } from 'react'
-import { fetchAiTelemetry, fetchEmployees } from '../lib/api'
+import { useEffect, useState } from 'react';
+import { fetchEmployees, fetchAiTelemetry } from '../lib/api';
 
-const REFRESH_INTERVAL = 5000
+const POLLING_INTERVAL = 10000;
 
-const getStatusBadgeClass = (status) => {
-  switch (status?.toLowerCase()) {
-    case 'high':
-      return 'bg-red-100 text-red-800'
-    case 'low':
-      return 'bg-green-100 text-green-800'
-    case 'normal':
-    case 'medium':
-      return 'bg-yellow-100 text-yellow-800'
-    default:
-      return 'bg-gray-100 text-gray-800'
-  }
-}
-
-function EmployeeOverview() {
-  const [employees, setEmployees] = useState([])
-  const [aiInsights, setAiInsights] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+export default function EmployeeOverview() {
+  const [employees, setEmployees] = useState([]);
+  const [aiInsights, setAiInsights] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState('');
 
   useEffect(() => {
-    let cancelled = false
+    let isMounted = true;
 
-    const loadData = async (isInitial = false) => {
+    const loadData = async () => {
       try {
         const [employeeData, telemetryData] = await Promise.all([
           fetchEmployees(),
-          fetchAiTelemetry(),
-        ])
+          fetchAiTelemetry().catch(() => null),
+        ]);
 
-        if (cancelled) return
-
-        setEmployees(employeeData)
-        setAiInsights(telemetryData)
-        setError('')
-      } catch (err) {
-        if (cancelled) return
-        console.error('Failed to refresh overview', err)
-        setError(err.message || 'Unable to refresh overview data')
+        if (isMounted) {
+          setEmployees(employeeData);
+          setAiInsights(telemetryData);
+          setErr('');
+        }
+      } catch (e) {
+        if (isMounted) {
+          setErr(e.message || 'Something went wrong');
+        }
       } finally {
-        if (!cancelled && isInitial) {
-          setLoading(false)
+        if (isMounted) {
+          setLoading(false);
         }
       }
-    }
+    };
 
-    loadData(true)
-
-    const interval = setInterval(() => {
-      loadData()
-    }, REFRESH_INTERVAL)
+    loadData();
+    const interval = setInterval(loadData, POLLING_INTERVAL);
 
     return () => {
-      cancelled = true
-      clearInterval(interval)
-    }
-  }, [])
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
 
-  const liveRiskClass = useMemo(() => {
-    if (!aiInsights?.burnoutRisk) return 'bg-gray-100 text-gray-700'
-    if (aiInsights.burnoutRisk === 'High') return 'bg-red-100 text-red-700'
-    if (aiInsights.burnoutRisk === 'Medium') return 'bg-yellow-100 text-yellow-700'
-    return 'bg-green-100 text-green-700'
-  }, [aiInsights])
+  const getStatusBadgeClass = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'high':
+        return 'bg-red-100 text-red-700';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-700';
+      case 'normal':
+        return 'bg-blue-100 text-blue-700';
+      case 'low':
+        return 'bg-green-100 text-green-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
+    }
+  };
 
   if (loading) {
-    return <div className="p-6">Loading overview...</div>
+    return (
+      <div className="p-6">
+        <div className="flex items-center justify-center h-64">
+          <p className="text-gray-500">Loading employees...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (err) {
+    return (
+      <div className="p-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-red-700">Error: {err}</p>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-800">Employee Overview</h2>
-          <p className="text-sm text-gray-500">Auto-refreshing every {REFRESH_INTERVAL / 1000}s</p>
-        </div>
-        <div className="text-xs text-gray-400">
-          Last updated: {aiInsights?.lastUpdated ? new Date(aiInsights.lastUpdated).toLocaleTimeString() : '—'}
-        </div>
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-800">Employee Overview</h1>
+        <p className="text-sm text-gray-500 mt-1">
+          Refreshes every {POLLING_INTERVAL / 1000} seconds
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-white border rounded-lg shadow-sm p-5 space-y-2">
-          <p className="text-xs uppercase text-gray-500">Live Burnout Risk</p>
-          <span className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${liveRiskClass}`}>
-            {aiInsights?.burnoutRisk ?? 'Unknown'}
-          </span>
-          <p className="text-xs text-gray-400">Dominant expression: {aiInsights?.dominantExpression ?? '—'}</p>
-          <p className="text-xs text-gray-400">Stress score: {aiInsights?.stressScore ?? '—'}</p>
+      {aiInsights && (
+        <div className="bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-6">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Latest AI Insights</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white rounded-lg p-4">
+              <p className="text-sm text-gray-600">Dominant Expression</p>
+              <p className="text-xl font-bold text-gray-800 capitalize">{aiInsights.expression || 'N/A'}</p>
+            </div>
+            <div className="bg-white rounded-lg p-4">
+              <p className="text-sm text-gray-600">Stress Score</p>
+              <p className="text-xl font-bold text-gray-800">{aiInsights.stressScore?.toFixed(2) || 'N/A'}</p>
+            </div>
+            <div className="bg-white rounded-lg p-4">
+              <p className="text-sm text-gray-600">Burnout Risk</p>
+              <span className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${aiInsights.burnoutRisk === 'High' ? 'bg-red-100 text-red-700' : aiInsights.burnoutRisk === 'Medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>{aiInsights.burnoutRisk || 'N/A'}</span>
+            </div>
+          </div>
         </div>
-        <div className="bg-white border rounded-lg shadow-sm p-5">
-          <p className="text-xs uppercase text-gray-500 mb-2">Recommendation</p>
-          <p className="text-sm text-gray-700 leading-relaxed">
-            {aiInsights?.recommendation ?? 'Telemetry not available yet.'}
-          </p>
-        </div>
-      </div>
+      )}
 
-      {error && <div className="text-sm text-red-600">{error}</div>}
-
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
+      <div className="bg-white rounded-lg shadow overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Burnout Score</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Emotion</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {employees.length === 0 ? (
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Employee</th>
-                <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Weekly Hrs</th>
-                <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Today's Hours</th>
-                <th className="px-6 py-4 text-center text-sm font-semibold text-gray-700">Status</th>
+                <td colSpan="6" className="px-6 py-8 text-center text-gray-500">No employees found</td>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {employees.map((employee) => (
-                <tr key={employee.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                        <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
+            ) : (
+              employees.map((emp) => (
+                <tr key={emp._id || emp.email} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{emp.name}</div>
+                        <div className="text-sm text-gray-500">{emp.email}</div>
                       </div>
-                      <span className="text-sm font-medium text-gray-800">{employee.name}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-800">{employee.weeklyHours}</td>
-                  <td className="px-6 py-4 text-center text-sm text-gray-800">{employee.todayHours} hrs</td>
-                  <td className="px-6 py-4 text-center">
-                    <span
-                      className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full capitalize ${getStatusBadgeClass(
-                        employee.status
-                      )}`}
-                    >
-                      {employee.status}
-                    </span>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{emp.role}</div>
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-semibold text-gray-900">{emp.burnoutScore !== undefined ? emp.burnoutScore : 'N/A'}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(emp.status)}`}>{emp.status || 'Unknown'}</span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900 capitalize">{emp.lastEmotion || 'N/A'}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{emp.lastUpdated ? new Date(emp.lastUpdated).toLocaleString() : 'N/A'}</td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
-  )
+  );
 }
-
-export default EmployeeOverview
-
