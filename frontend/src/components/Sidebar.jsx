@@ -1,13 +1,17 @@
-function Sidebar() {
+function Sidebar({ activePage, onNavigate }) {
   return (
     <aside className="w-64 bg-[#2C3E50] text-white flex flex-col">
       <div className="p-6">
         <h1 className="text-xl font-semibold">WorkWell AI</h1>
       </div>
       <nav className="flex-1 px-4 space-y-2">
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#4A69BD] text-white"
+        <button
+          onClick={() => onNavigate('dashboard')}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+            activePage === 'dashboard'
+              ? 'bg-[#4A69BD] text-white'
+              : 'text-gray-300 hover:bg-[#34495E]'
+          }`}
         >
           <svg
             className="w-5 h-5"
@@ -23,10 +27,14 @@ function Sidebar() {
             />
           </svg>
           <span>Dashboard</span>
-        </a>
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#34495E] transition-colors"
+        </button>
+        <button
+          onClick={() => onNavigate('employees')}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+            activePage === 'employees'
+              ? 'bg-[#4A69BD] text-white'
+              : 'text-gray-300 hover:bg-[#34495E]'
+          }`}
         >
           <svg
             className="w-5 h-5"
@@ -42,10 +50,14 @@ function Sidebar() {
             />
           </svg>
           <span>Employees</span>
-        </a>
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-[#34495E] transition-colors"
+        </button>
+        <button
+          onClick={() => onNavigate('settings')}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+            activePage === 'settings'
+              ? 'bg-[#4A69BD] text-white'
+              : 'text-gray-300 hover:bg-[#34495E]'
+          }`}
         >
           <svg
             className="w-5 h-5"
@@ -67,10 +79,10 @@ function Sidebar() {
             />
           </svg>
           <span>Settings</span>
-        </a>
+        </button>
       </nav>
     </aside>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar
