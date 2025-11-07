@@ -1,8 +1,49 @@
+import { useEffect, useState } from 'react'
+import { fetchEmployees } from '../lib/api'
 import MetricCard from './MetricCard'
 import BurnoutChart from './BurnoutChart'
 import EmployeeTable from './EmployeeTable'
 
-function Dashboard({ employees }) {
+function Dashboard() {
+  const [employees, setEmployees] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetchEmployees()
+        // Transform backend data to match dashboard format
+        const transformedData = data.map(emp => ({
+          name: emp.name,
+          risk: emp.status,
+          recommendation: getRecommendation(emp.status)
+        }))
+        setEmployees(transformedData)
+      } catch (e) {
+        setError(e.message || 'Something went wrong')
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [])
+
+  const getRecommendation = (status) => {
+    switch (status.toLowerCase()) {
+      case 'high':
+        return 'Encourage a rest'
+      case 'normal':
+        return 'Monitor workload'
+      case 'low':
+        return 'Maintain current pace'
+      default:
+        return 'Monitor workload'
+    }
+  }
+
+  if (loading) return <div className="p-6">Loading dashboard...</div>
+  if (error) return <div className="p-6 text-red-600">Error: {error}</div>
+
   return (
     <div className="p-6 space-y-6">
       {/* Metrics Cards */}
@@ -99,4 +140,4 @@ function Dashboard({ employees }) {
   )
 }
 
-export default Dashboard
+export default Dashboard
