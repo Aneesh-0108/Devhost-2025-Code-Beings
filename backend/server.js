@@ -14,12 +14,48 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors({ origin: ["http://localhost:5173", "http://localhost:5174"] }));
+
+// CORS Configuration - Supports both development and production
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  process.env.FRONTEND_URL, // Production frontend URL from Vercel
+].filter(Boolean); // Remove undefined values
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    // In development, allow all localhost origins
+    if (process.env.NODE_ENV === 'development' || origin.includes('localhost')) {
+      return callback(null, true);
+    }
+    
+    // In production, check against allowed origins
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use("/api/employees", employeesRouter);
 app.use("/api/time", timeRouter);
 app.use("/api/ai", aiRouter);
+
+// Health check endpoint for deployment monitoring
+app.get("/health", (req, res) => {
+  res.status(200).json({ 
+    status: "OK", 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // Initialize AI System
 const initializeAI = async () => {
