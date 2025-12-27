@@ -48,6 +48,11 @@ app.use("/api/employees", employeesRouter);
 app.use("/api/time", timeRouter);
 app.use("/api/ai", aiRouter);
 
+
+app.get("/",(req,res)=>{
+  res.send("Worwell AI backend is running!")
+});
+
 // Health check endpoint for deployment monitoring
 app.get("/health", (req, res) => {
   res.status(200).json({ 
@@ -73,7 +78,7 @@ const initializeAI = async () => {
 const PORT = process.env.PORT || 5000;
 
 // Start server and initialize AI
-app.listen(PORT, async () => {
+app.listen(PORT, '0.0.0.0', async () => {
     console.log(`🚀 Server running on port ${PORT}`);
     // Initialize AI after a short delay to ensure MongoDB connection is ready
     setTimeout(() => {
